@@ -6,7 +6,9 @@
 
     <title>NHS Test</title>
 
+
     <link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <link href="style.css" rel="stylesheet" />
   </head>
 
@@ -15,5 +17,93 @@
     <div id="root"></div>
     
     <script src="scripts.js"></script>
+
+<style>
+#root {
+    max-width: 600;
+    margin: 0 auto;
+  }
+  
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .card {
+    margin: 1rem;
+    border: 1px solid gray;
+  }
+  
+  @media screen and (min-width: 600px) {
+    .card {
+      flex: 1 1 calc(50% - 2rem);
+    }
+  }
+  
+  @media screen and (min-width: 900px) {
+    .card {
+      flex: 1 1 calc(33% - 2rem);
+    }
+  }
+
+</style>
+
+
+
+
+    <script>
+      const app = document.getElementById('root')
+
+const container = document.createElement('div')
+container.setAttribute('class', 'container')
+
+var img = document.createElement("img");
+img.src = "https://www.recoveryandwellbeing.co.uk/images/NHSLogo.png";
+var src = document.getElementById("header");
+src.appendChild(img);
+
+app.appendChild(container)
+
+var request = new XMLHttpRequest()
+request.open('GET', 'https://api.covwarkpt.nhs.uk/cwpt.interviews/api/practices', true)
+request.onload = function () {
+  // JSON Data
+  var data = JSON.parse(this.response)
+  if (request.status >= 200 && request.status < 400) {
+    data.forEach(practise => {
+      const card = document.createElement('div')
+      card.setAttribute('class', 'card')
+
+      const h1 = document.createElement('h1')
+      h1.textContent = practise.name
+
+      //Dont need to display, just store for link
+      const h2 = document.createElement('h2')
+      h2.textContext = practise.id
+
+      const p = document.createElement('p')
+      practise.addressLine1 = practise.addressLine1
+      p.textContent = `${practise.addressLine1}`
+
+      //Link to individual practise page through id
+      const btn = document.createElement("button");
+      btn.innerHTML = "Visit";
+      // button.onclick = ""
+      
+
+      container.appendChild(card)
+      card.appendChild(h1)
+      card.appendChild(p)
+      card.appendChild(btn)
+    })
+  } else {
+    const errorMessage = document.createElement('marquee')
+    errorMessage.textContent = `Error`
+    app.appendChild(errorMessage)
+  }
+}
+
+request.send();
+    </script>
   </body>
 </html>
