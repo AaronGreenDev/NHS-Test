@@ -1,7 +1,5 @@
 const app = document.getElementById('root')
 
-
-
 const container = document.createElement('div')
 container.setAttribute('class', 'container')
 
@@ -50,4 +48,4 @@ request.onload = function () {
   }
 }
 
-request.send()
+request.send();
