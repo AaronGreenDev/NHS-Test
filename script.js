@@ -1,7 +1,6 @@
 const app = document.getElementById('root')
 
-//const logo = document.createElement('img')
-//logo.src = 'https://www.recoveryandwellbeing.co.uk/images/NHSLogo.png'
+
 
 const container = document.createElement('div')
 container.setAttribute('class', 'container')
